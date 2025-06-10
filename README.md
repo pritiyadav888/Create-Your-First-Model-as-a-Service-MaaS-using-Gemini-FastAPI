@@ -1,4 +1,4 @@
-# 🎭 Sarcastic Quote Generator API (MaaS)
+# Sarcastic Quote Generator API (MaaS)
 
 A RESTful **Model-as-a-Service** built with FastAPI and Gemini, serving sarcastic, demotivational quotes tailored to your mood. Perfect for existential humor, self-deprecating laughs, or just roasting your motivation.
 
@@ -6,17 +6,31 @@ A RESTful **Model-as-a-Service** built with FastAPI and Gemini, serving sarcasti
 
 ---
 
-## ✨ Features
+## Features
 
-- 🤖 **Google Gemini Integration** – Powered by `gemini-1.5-flash`
-- ⚡ **FastAPI Backend** – Blazing fast Python web framework
-- 🔐 **.env Support** – Secure API key management
-- 📜 **Swagger UI** – Interactive auto-generated docs
-- 🧠 **Few-shot Prompting** – Highly sarcastic, intentionally bad advice
+- **Google Gemini Integration** – Powered by `gemini-1.5-flash`
+- **FastAPI Backend** – Blazing fast Python web framework
+- **.env Support** – Secure API key management
+- **Swagger UI** – Interactive auto-generated docs
+- **Few-shot Prompting** – Highly sarcastic, intentionally bad advice
 
 ---
 
-## 🧰 Prerequisites
+## What is Model-as-a-Service (MaaS)?
+
+**Model-as-a-Service (MaaS)** is a cloud-based approach to deploying machine learning models via APIs, allowing developers to integrate intelligent capabilities into applications without handling infrastructure or model training directly.
+
+This project demonstrates MaaS using **Google Gemini** and **FastAPI**, but the same architecture can be adapted to other large language models (LLMs) like OpenAI's GPT, Anthropic's Claude, or open-source models hosted via Hugging Face or Vertex AI.
+
+Key benefits:
+
+- Easy plug-and-play API for AI services
+- Reusable and composable for multiple frontends (web, mobile, CLI)
+- Scalable and secure when deployed on cloud platforms
+
+---
+
+## Prerequisites
 
 - Python 3.9+
 - A Google Cloud API key with Generative AI access  
@@ -24,12 +38,14 @@ A RESTful **Model-as-a-Service** built with FastAPI and Gemini, serving sarcasti
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
-# 1. Clone this repo
-git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git
-cd YOUR_REPOSITORY_NAME
+# 1. Clone this repo (you can rename the folder)
+git clone https://github.com/pritiyadav888/Create-Your-First-Model-as-a-Service-MaaS-using-Gemini-FastAPI.git your-custom-folder-name
+cd your-custom-folder-name
+
+# Replace `your-custom-folder-name` with any name you prefer for your project directory.
 
 # 2. Create a virtual environment
 python -m venv venv
@@ -47,15 +63,15 @@ uvicorn main:app --reload
 
 ---
 
-# 🔍 API Documentation
+# API Documentation
 
-## 📘 Swagger UI
+## Swagger UI
 
 Once running, go to [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) to try the API live.
 
 ---
 
-## 🧪 Sample curl Request
+## Sample curl Request
 
 ```bash
 curl -X POST "http://127.0.0.1:8000/quote" \
@@ -63,7 +79,7 @@ curl -X POST "http://127.0.0.1:8000/quote" \
      -d '{"mood": "motivated"}'
 ```
 
-### ✅ Expected Response
+### Expected Response
 
 ```json
 {
@@ -74,18 +90,19 @@ curl -X POST "http://127.0.0.1:8000/quote" \
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```bash
 sarcastic-maas/
 ├── main.py           # FastAPI app
+├── prompts.py        # Few-shot prompt configuration (optional)
 ├── .env              # API key config (not committed)
 ├── requirements.txt  # Dependencies
 ```
 
 ---
 
-## 🖼️ Sample Query & Output
+## Sample Query & Output
 
 ### Request Example
 
@@ -101,15 +118,13 @@ sarcastic-maas/
 
 ---
 
-## 🧙‍♀️ About the Author
+## About the Author
 
-Built with love and sarcasm by Priti Yadav
-
-Check out my [GitHub](https://github.com/pritiyadav888) or [portfolio site](https://pritiyadav.me).
+Built with love and sarcasm by [Priti Yadav](https://www.linkedin.com/in/priti-yadavml/)
 
 ---
 
-## ☕ Support This Project
+## Support This Project
 
 If this made you chuckle, cry, or raise an eyebrow:
 
@@ -118,5 +133,3 @@ If this made you chuckle, cry, or raise an eyebrow:
     <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" width="200" />
   </a>
 </p>
-
----
