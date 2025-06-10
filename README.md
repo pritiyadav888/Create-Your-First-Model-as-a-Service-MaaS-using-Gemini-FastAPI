@@ -89,15 +89,15 @@ sarcastic-maas/
 
 ### Request Example
 
-![Request Example](images/request.png)
+![Request Example](request.png)
 
 ### Response Example
 
-![Response Example](images/response.png)
+![Response Example](response.png)
 
 ### Swagger UI
 
-![Swagger UI](images/swagger.png)
+![Swagger UI](swagger.png)
 
 ---
 
