@@ -18,68 +18,132 @@ A RESTful **Model-as-a-Service** built with FastAPI and Gemini, serving sarcasti
 
 ## What is Model-as-a-Service (MaaS)?
 
-**Model-as-a-Service (MaaS)** is a cloud-based approach to deploying machine learning models via APIs, allowing developers to integrate intelligent capabilities into applications without handling infrastructure or model training directly.
+**Model-as-a-Service (MaaS)** is a cloud-based approach to deploying machine learning models via APIs. It allows you to:
 
-This project demonstrates MaaS using **Google Gemini** and **FastAPI**, but the same architecture can be adapted to other large language models (LLMs) like OpenAI's GPT, Anthropic's Claude, or open-source models hosted via Hugging Face or Vertex AI.
+- Abstract away infrastructure setup
+- Use pre-trained models like Gemini, GPT, or Claude
+- Serve models via HTTP endpoints
 
-Key benefits:
-
-- Easy plug-and-play API for AI services
-- Reusable and composable for multiple frontends (web, mobile, CLI)
-- Scalable and secure when deployed on cloud platforms
+MaaS makes it possible for anyone to integrate AI into apps without needing to train or host the models manually.
 
 ---
 
-## Prerequisites
+## Full Tutorial: Build Your First MaaS App with Gemini + FastAPI
 
-- Python 3.9+
-- A Google Cloud API key with Generative AI access  
-  ➡️ [Get it from Google AI Studio](https://makersuite.google.com/app)
+### Step 1: Understand the Goal
+
+We’re building an API that takes a user's mood and returns a sarcastic, demotivational quote. The model is served via FastAPI and powered by Google’s Gemini model using a few-shot learning technique.
 
 ---
 
-## Quick Start
+### Step 2: Set Up the Workflow
+
+The folder structure looks like this:
 
 ```bash
-# 1. Clone this repo (you can rename the folder)
-git clone https://github.com/pritiyadav888/Create-Your-First-Model-as-a-Service-MaaS-using-Gemini-FastAPI.git your-custom-folder-name
-cd your-custom-folder-name
+Project/
+├── main.py           # FastAPI app
+├── prompts.py        # Prompt examples and system instructions
+├── .env              # API key config (excluded from version control)
+├── requirements.txt  # Dependencies
+```
 
-# Replace `your-custom-folder-name` with any name you prefer for your project directory.
+Install dependencies:
 
-# 2. Create a virtual environment
-python -m venv venv
-source venv/bin/activate  # or .\venv\Scripts\activate on Windows
-
-# 3. Install dependencies
+```bash
 pip install -r requirements.txt
-
-# 4. Create your .env file
-echo 'GOOGLE_API_KEY="your_key_here"' > .env
-
-# 5. Run the API
-uvicorn main:app --reload
 ```
 
 ---
 
-# API Documentation
+### Step 3: Load and Configure Gemini
 
-## Swagger UI
+In `main.py`, we load the API key and initialize the Gemini model:
 
-Once running, go to [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) to try the API live.
+```python
+from dotenv import load_dotenv
+import google.generativeai as genai
+
+load_dotenv()
+api_key = os.getenv("GOOGLE_API_KEY")
+genai.configure(api_key=api_key)
+model = genai.GenerativeModel(
+    "gemini-1.5-flash",
+    system_instruction=SYSTEM_PROMPT
+)
+```
+
+This sets up the connection to Google Gemini and configures it with your system-level prompt.
 
 ---
 
-## Sample curl Request
+### Step 4: Define User Intent with Few-Shot Examples
+
+In `prompts.py`, we use **few-shot prompting** to steer Gemini’s behavior:
+
+```python
+FEW_SHOT_EXAMPLES = [
+    {"role": "user", "parts": ["My mood: Hopeful"]},
+    {"role": "model", "parts": ["Quote: Shoot for the moon. Even if you miss, you’ll land in crippling student debt."]},
+    # ... more examples ...
+]
+```
+
+We’re showing Gemini how to behave by providing examples of what to do for different moods.
+
+The `SYSTEM_PROMPT` adds constraints:
+
+```python
+SYSTEM_PROMPT = (
+    "You are a cynical, sarcastic demotivational quote generator. "
+    "Quotes must be punchy, under 25 words, and never say 'embrace'."
+)
+```
+
+---
+
+### Step 5: Create the API Endpoint
+
+In `main.py`, the `/quote` endpoint takes a JSON payload with a mood and appends it to the few-shot examples:
+
+```python
+@app.post("/quote")
+def get_quote(req: MoodRequest):
+    mood = req.mood.strip()
+    messages = FEW_SHOT_EXAMPLES + [
+        {"role": "user", "parts": [f"My mood: {mood}"]},
+        {"role": "model", "parts": ["Quote:"]},
+    ]
+```
+
+Then Gemini generates a response:
+
+```python
+response = model.generate_content(messages)
+quote = response.text.strip()
+```
+
+We clean up the quote and send it back to the user.
+
+---
+
+### Step 6: Test Your API
+
+Run the server:
 
 ```bash
-curl -X POST "http://127.0.0.1:8000/quote" \
+uvicorn main:app --reload
+```
+
+Try it out:
+
+```bash
+curl -X POST http://127.0.0.1:8000/quote \
      -H "Content-Type: application/json" \
      -d '{"mood": "motivated"}'
 ```
 
-### Expected Response
+Expected output:
 
 ```json
 {
@@ -90,15 +154,11 @@ curl -X POST "http://127.0.0.1:8000/quote" \
 
 ---
 
-## Project Structure
+## Swagger UI
 
-```bash
-sarcastic-maas/
-├── main.py           # FastAPI app
-├── prompts.py        # Few-shot prompt configuration (optional)
-├── .env              # API key config (not committed)
-├── requirements.txt  # Dependencies
-```
+Visit: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+Use the built-in docs to send requests and view responses live.
 
 ---
 
