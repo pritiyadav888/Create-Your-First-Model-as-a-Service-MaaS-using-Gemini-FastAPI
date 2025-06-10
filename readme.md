@@ -166,15 +166,15 @@ Use the built-in docs to send requests and view responses live.
 
 ### Request Example
 
-![Request Example](images/request.png)
+![Request Example](https://github.com/pritiyadav888/Create-Your-First-Model-as-a-Service-MaaS-using-Gemini-FastAPI/blob/main/images/request.png)
 
 ### Response Example
 
-![Response Example](images/response.png)
+![Response Example](https://github.com/pritiyadav888/Create-Your-First-Model-as-a-Service-MaaS-using-Gemini-FastAPI/blob/main/images/response.png)
 
 ### Swagger UI
 
-![Swagger UI](images/swagger.png)
+![Swagger UI](https://github.com/pritiyadav888/Create-Your-First-Model-as-a-Service-MaaS-using-Gemini-FastAPI/blob/main/images/swagger.png)
 
 ---
 
